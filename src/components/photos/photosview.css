@@ -1,10 +1,20 @@
 .block-photos {
     padding-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 200px;
+}
+
+.container-main__info-box {
+    color: rgb(134, 134, 134);
 }
 
 .block-photos__container-columns {
     display: flex;
     flex-direction: row;
+    width: 100%;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;

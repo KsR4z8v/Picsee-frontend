@@ -9,8 +9,8 @@ function Signup() {
   const [loader, setLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
-  const [first_names, setFirst_names] = useState("");
-  const [last_names, setLast_names] = useState("");
+  const [firstNames, setFirstNames] = useState("");
+  const [lastNames, setLastNames] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -20,7 +20,7 @@ function Signup() {
   const registerHandler = () => {
     setErrorMessage("");
     if (
-      [last_names, first_names, email, username, password1, password2].some(
+      [lastNames, firstNames, email, username, password1, password2].some(
         (d) => d.trim() === ""
       )
     ) {
@@ -42,12 +42,12 @@ function Signup() {
           navigate("/");
         }
         setLogged(true);
-        window.sessionStorage.setItem("session", JSON.stringify(data));
+        window.sessionStorage.setItem("session", JSON.stringify(data.data));
       },
       {
         username,
-        last_names,
-        first_names,
+        lastNames,
+        firstNames,
         email,
         password: password1,
       }
@@ -65,7 +65,7 @@ function Signup() {
         <div className="form-signup__inputs-line">
           <input
             onChange={(e) => {
-              setFirst_names(e.target.value);
+              setFirstNames(e.target.value);
             }}
             id="registro-nombres-input"
             className="form-signup__input-first-names input-form"
@@ -75,7 +75,7 @@ function Signup() {
 
           <input
             onChange={(e) => {
-              setLast_names(e.target.value);
+              setLastNames(e.target.value);
             }}
             id="registro-apellidos-input"
             className="form-signup__input-last-names input-form"

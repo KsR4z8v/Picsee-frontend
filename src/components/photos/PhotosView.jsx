@@ -13,12 +13,15 @@ function PhotosView({ query, tag, user }) {
   const { get } = usePosts();
   useEffect(() => {
     setLoader(true);
+    setColum1([]);
+    setColum2([]);
+    setColum3([]);
     get(
-      (photos, err) => {
+      (data, err) => {
         if (err) {
           return alert(err);
         }
-        const sort = sortPhotosInColumns(photos);
+        const sort = sortPhotosInColumns(data.data.posts);
         setColum1(sort[0]);
         setColum2(sort[1]);
         setColum3(sort[2]);
@@ -47,7 +50,18 @@ function PhotosView({ query, tag, user }) {
             </svg>
           </div>
         ) : (
-          <></>
+          (() => {
+            const sum = colum1.length + colum2.length + colum3.length;
+            if (sum === 0) {
+              return (
+                <div className="container-main__info-box">
+                  Parece que no hay imágenes . ¡Explora otros tags o prueba en
+                  la barra de busqueda y encuentra algo genial!
+                </div>
+              );
+            }
+            return <></>;
+          })()
         )}
       </div>
     </>

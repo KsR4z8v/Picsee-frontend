@@ -11,7 +11,7 @@ function Post({ post }) {
   return (
     <>
       <div
-        id={post.id_post}
+        id={post.id}
         onMouseEnter={() => {
           setDataPhoto("visible");
           setBrightness(80);
@@ -23,7 +23,7 @@ function Post({ post }) {
         className="block-photos__container-post"
       >
         <img
-          src={post.url}
+          src={post.image.url}
           className="block-photos__photo"
           alt=""
           loading="lazy"
@@ -39,15 +39,15 @@ function Post({ post }) {
           <div className="block-photos__info-author">
             <img
               className="bloc-photos__avatar-author"
-              src={post.author_avatar}
+              src={post.author.urlAvatar}
               alt=""
             />
             <div className="block-photos__container-text">
               <p className="block-photos__author_name">
-                {capitalizeString(post.author_name)}
+                {capitalizeString(post.author.username)}
               </p>
               <p className="block-photos__date_upload">
-                {new Date(post.upload_date).toDateString()}
+                {new Date(post.uploadAt).toDateString()}
               </p>
             </div>
           </div>

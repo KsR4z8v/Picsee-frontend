@@ -36,8 +36,8 @@ function UploadPhotosModal({ visibleModel }) {
     setFiles([...files.slice(0, index), ...files.slice(index + 1)]);
   };
 
-  const p = (f) => {
-    return <PostUploadPreview f={f} deleteFile={deleteFileHandler} />;
+  const p = (f, i) => {
+    return <PostUploadPreview key={i} f={f} deleteFile={deleteFileHandler} />;
   };
   return (
     <div className="block-upload">

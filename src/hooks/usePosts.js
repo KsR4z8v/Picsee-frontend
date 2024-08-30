@@ -10,12 +10,11 @@ const usePosts = () => {
                     if (querys[i]) {
                         q.push(`${i}=${querys[i]}`)
                     }
-
                 }
                 const resp = await fetch(url + `post${q.length > 0 ? '?' + q.join('&') : ''}`);
                 const data = await resp.json()
                 if (resp.ok) {
-                    callback(data.posts)
+                    callback(data)
                 } else {
                     console.log(data);
                 }
@@ -39,16 +38,17 @@ const usePosts = () => {
         upload: async (callback, files) => {
             try {
                 const form = new FormData()
-                const tags = {}
-                for (const f in files) {
-                    form.append('photos', files[f])
-                    tags[f] = files[f].tags
+                const tags = []
+                for (let i = 0; i < files.length; i++) {
+                    form.append('photos', files[i])
+                    tags.push(files[i].tags)
                 }
+
                 form.append('tags', JSON.stringify(tags))
 
                 const token = JSON.parse(window.sessionStorage.getItem('session')).token
-                const resp = await fetch(url + 'post/', {
-                    method: 'PUT',
+                const resp = await fetch(url + 'post', {
+                    method: 'POST',
                     headers: { 'auth': token },
                     body: form
                 })
@@ -57,7 +57,7 @@ const usePosts = () => {
                       return callback(data.images)
                   } */
                 if (data.error.code === 13) {
-                    callback(undefined, 'Debes de subir imagenes como minimo de 5MP')
+                    callback(undefined, 'Ups algo ha salido mal')
                 }
 
             } catch (e) {

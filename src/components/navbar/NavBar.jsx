@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import "./navbar.css";
 import UserContext from "../../context/userContext";
+import { IoIosSearch } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 // eslint-disable-next-line react/prop-types
@@ -10,7 +11,9 @@ function NavBar({ openUploadModal }) {
   const { logged, avatar } = useContext(UserContext);
 
   const navigate = useNavigate();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setSearch("");
+  }, []);
   return (
     <>
       <header className="nav-bar">
@@ -36,15 +39,13 @@ function NavBar({ openUploadModal }) {
             className="nav-bar__input-search"
             type="search"
             name=""
-            placeholder="busca algo..."
+            placeholder="Que te gustaria ver hoy ?"
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
-          <img
+          <IoIosSearch
             className="nav-bar_icon_search"
-            src="https://ik.imagekit.io/picmont/icons/icon_serch.png?updatedAt=1687206842901"
-            alt=""
             onClick={() => {
               navigate(`/query/${search}`);
             }}
@@ -52,15 +53,6 @@ function NavBar({ openUploadModal }) {
         </div>
         <div className="nav-bar__menu menu">
           <ul className="menu__list-items">
-            {!logged ? (
-              <li className="menu__item-about item">
-                <NavLink className={"nav-link"} to={"/forms/sign"}>
-                  Inicia sesion
-                </NavLink>
-              </li>
-            ) : (
-              <></>
-            )}
             <li className="menu__item-about item">
               <div
                 onClick={() => {
@@ -72,7 +64,13 @@ function NavBar({ openUploadModal }) {
               </div>
             </li>
 
-            {avatar !== "" ? (
+            {!logged ? (
+              <li className="menu__item-about item">
+                <NavLink className={"nav-link"} to={"/forms/sign"}>
+                  Inicia sesion
+                </NavLink>
+              </li>
+            ) : (
               <li className="menu__item-avatar item">
                 <div className="nav-bar__container-avatar">
                   <img
@@ -86,8 +84,6 @@ function NavBar({ openUploadModal }) {
                   />
                 </div>
               </li>
-            ) : (
-              <></>
             )}
           </ul>
           {visibleMenu ? (

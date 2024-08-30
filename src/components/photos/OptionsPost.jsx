@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
@@ -19,25 +20,22 @@ function OptionsPost({ post }) {
       if (err) {
         alert(err);
       }
-    }, post.id_post);
+    }, post.id);
   };
-  useEffect(() => {
-    const user = JSON.parse(window.sessionStorage.getItem("session"));
-    if (post.likes.includes(user?.id_user)) {
-      setLiked(true);
-    }
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div className="block-photos__options">
       <IoMdArrowDown
         onClick={async () => {
           const resp = await fetch(
             // eslint-disable-next-line react/prop-types
-            `http://localhost:5000/api/v1/post/${post.id_post}/download`
+            `http://localhost:8000/api/v1/post/${post.id}/download`
           );
 
           if (resp.ok) {
-            download(await resp.blob(), post.name + "." + post.format);
+            const blob = await resp.blob();
+            const metadata = JSON.parse(resp.headers.get("Meta-Data"));
+            download(blob, `${metadata.name}`);
           } else {
             alert("Error");
           }

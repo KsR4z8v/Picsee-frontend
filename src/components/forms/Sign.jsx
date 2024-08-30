@@ -1,4 +1,3 @@
-import "./forms.css";
 import { GoogleLogin } from "@react-oauth/google";
 import { useEffect, useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
@@ -6,13 +5,15 @@ import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import UserContext from "../../context/userContext";
+import "./forms.css";
+
 function Sign() {
   const { redirect } = useParams();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { setLogged, setUsername } = useContext(UserContext);
+  const { setLogged } = useContext(UserContext);
   const navigate = useNavigate();
   const { sign } = useUser();
 
@@ -25,7 +26,7 @@ function Sign() {
     }
     setLoader(true);
     sign(
-      (user, err) => {
+      (data, err) => {
         setLoader(false);
         if (err) {
           return setErrorMessage(err);
@@ -37,9 +38,9 @@ function Sign() {
           navigate("/");
         }
         setLogged(true);
-        window.sessionStorage.setItem("session", JSON.stringify(user));
+        window.sessionStorage.setItem("session", JSON.stringify(data.data));
       },
-      { username: user, password }
+      { user, password }
     );
   };
 
@@ -71,7 +72,7 @@ function Sign() {
 
         {loader ? (
           <div className="effect-loader">
-            <svg className="ring" viewBox="25 25 50 50" stroke-width="5">
+            <svg className="ring" viewBox="25 25 50 50">
               <circle cx="50" cy="50" r="20" />
             </svg>
           </div>

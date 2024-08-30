@@ -1,5 +1,3 @@
-import { json } from "react-router-dom"
-
 const useUser = () => {
     const url = import.meta.env.VITE_API_URL
     return {
@@ -29,7 +27,6 @@ const useUser = () => {
             }
         },
         create: async (callback, userData) => {
-            console.log(userData);
             try {
                 const resp = await fetch(url + 'user', {
                     method: 'POST',
