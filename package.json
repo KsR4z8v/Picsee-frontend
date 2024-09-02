@@ -1,7 +1,7 @@
 {
   "name": "picsee-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.0-dev",
   "type": "module",
   "proxy": "http://localhost:5000",
   "scripts": {
