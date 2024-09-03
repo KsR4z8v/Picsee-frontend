@@ -3,11 +3,11 @@ import FormsView from "../components/forms/FormsView";
 import Signup from "../components/forms/Signup";
 import Sign from "../components/forms/Sign";
 import Home from "../pages/Home";
-import "./app.css";
 import MainView from "../components/mainview/MainView";
 import { UserContextProvider } from "../context/userContext";
 import PerfilView from "../components/user/PerfilView";
 import ProtectedRoute from "../utils/ProtectedRoute";
+import "./app.css";
 
 const router = createBrowserRouter([
   {
@@ -38,14 +38,14 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "/forms",
-        element: <FormsView />,
-        children: [
-          { path: "sign/", element: <Sign /> },
-          { path: "signup", element: <Signup /> },
-        ],
-      },
+    ],
+  },
+  {
+    path: "/forms",
+    element: <FormsView />,
+    children: [
+      { path: "sign/", element: <Sign /> },
+      { path: "signup", element: <Signup /> },
     ],
   },
 ]);

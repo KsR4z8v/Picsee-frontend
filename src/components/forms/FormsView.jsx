@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import "./forms.css";
 function FormsView() {
   return (
     <>
