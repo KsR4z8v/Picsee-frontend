@@ -17,16 +17,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <MainView />,
-        children: [
-          {
-            path: "/tg/:tag",
-            element: <MainView />,
-          },
-          {
-            path: "/query/:query",
-            element: <MainView />,
-          },
-        ],
       },
       {
         path: "/perfil/:username",
