@@ -17,6 +17,7 @@ function Signup() {
   const { setLogged } = useContext(UserContext);
   const navigate = useNavigate();
   const { create } = useUser();
+
   const registerHandler = () => {
     setErrorMessage("");
     if (
@@ -58,17 +59,19 @@ function Signup() {
 
   return (
     <>
-      <div className="container-forms__form-signup form-signup">
-        <div className="form-signup__tittle">
-          <h2>Registro</h2>
+      <div className="container_signup">
+        <div className="header_signup">
+          <div className="text_signup">Registro</div>
+          <div className="underline_signup"></div>
         </div>
-        <div className="form-signup__inputs-line">
+
+        <div className="inputs_signup">
           <input
             onChange={(e) => {
               setFirstNames(e.target.value);
             }}
             id="registro-nombres-input"
-            className="form-signup__input-first-names input-form"
+            className="input_signup input-form"
             type="text"
             placeholder="Nombre *"
           />
@@ -78,78 +81,81 @@ function Signup() {
               setLastNames(e.target.value);
             }}
             id="registro-apellidos-input"
-            className="form-signup__input-last-names input-form"
+            className="input_signup input-form"
             type="text"
-            placeholder="apellidos *"
+            placeholder="Apellidos *"
           />
-        </div>
-        <input
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-          id="registro-usuario-input"
-          className="form-signup__input-username input-form"
-          type="text"
-          placeholder="Nombre de usuario *"
-        />
-        <input
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          id="registro-correo-input"
-          className="form-signup__input-email input-form"
-          type="email"
-          placeholder="ejemplo@correo.co *"
-        />
 
-        <input
-          onChange={(e) => {
-            setPassword1(e.target.value);
-          }}
-          id="registro-contraseña-input"
-          className="form-signup__input-password input-form"
-          type="password"
-          placeholder="Contraseña minimo 8 caracteres *"
-        />
-        <input
-          onChange={(e) => {
-            setPassword2(e.target.value);
-          }}
-          id="registro-contraseña-input-2"
-          className="form-signup__input-confirm-password input-form"
-          type="password"
-          placeholder="confirmar contraseña *"
-        />
-        {loader ? (
-          <div className="effect-loader">
-            <svg className="ring" viewBox="25 25 50 50" stroke-width="5">
-              <circle cx="50" cy="50" r="20" />
-            </svg>
+          <input
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            id="registro-usuario-input"
+            className="input_signup input-form"
+            type="text"
+            placeholder="Nombre de usuario *"
+          />
+          <input
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            id="registro-correo-input"
+            className="input_signup input-form"
+            type="email"
+            placeholder="ejemplo@correo.co *"
+          />
+
+          <input
+            onChange={(e) => {
+              setPassword1(e.target.value);
+            }}
+            id="registro-contraseña-input"
+            className="input_signup input-form"
+            type="password"
+            placeholder="Contraseña mínimo 8 caracteres *"
+          />
+          <input
+            onChange={(e) => {
+              setPassword2(e.target.value);
+            }}
+            id="registro-contraseña-input-2"
+            className="input_signup input-form"
+            type="password"
+            placeholder="Confirmar contraseña *"
+          />
+
+          {loader ? (
+            <div className="effect-loader">
+              <svg className="ring" viewBox="25 25 50 50" stroke-width="5">
+                <circle cx="50" cy="50" r="20" />
+              </svg>
+            </div>
+          ) : (
+            <></>
+          )}
+          <div id="container_error_signup">{errorMessage}</div>
+
+          <div
+            onClick={registerHandler}
+            id="btn_registro"
+            className="submit_signup"
+          >
+            Registrarse
           </div>
-        ) : (
-          <></>
-        )}
-        <div id="container_error" className="form-sign__container-error">
-          {errorMessage}
-        </div>
-        <div
-          onClick={registerHandler}
-          id="btn_registro"
-          className="form-signup__btn-signup btn-form btn--green"
-        >
-          Registrarse
-        </div>
-        <div className="info">
-          <p>
-            Ya tienes una cuenta ?
-            <NavLink className={"nav-link"} to={"/forms/sign"}>
-              {" "}
-              <b>Inicia aqui</b>
-            </NavLink>
-          </p>
-        </div>
-        <div className="form-signup__info">
-          Al unirte aceptas los terminos y condiciones ®
+
+          <div className="siTieneCuenta">
+            <p>
+              ¿Ya tienes una cuenta?
+              <NavLink className="nav-link" to="/forms/sign">
+                {" "}
+                <b>Inicia aquí</b>
+              </NavLink>
+            </p>
+          </div>
+
+          <div className="terminosCondiciones">
+            Al unirte aceptas los términos y condiciones ®
+          </div>
         </div>
       </div>
     </>

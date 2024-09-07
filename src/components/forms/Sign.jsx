@@ -22,91 +22,101 @@ function Sign() {
   const signHandler = () => {
     setErrorMessage("");
     if (user.trim() === "" || password.trim() === "") {
-      return setErrorMessage("Asegurate de llenar todos los campos");
+      return setErrorMessage("Asegúrate de llenar todos los campos");
     }
     setLoader(true);
     sign(
       (data, err) => {
-        setLoader(false);
+        setLoader(false);  // Detener el cargador cuando se recibe respuesta
         if (err) {
           return setErrorMessage(err);
         }
-        setLoader(false);
+        setLogged(true);
+        window.sessionStorage.setItem("session", JSON.stringify(data.data));
         if (redirect) {
           navigate(`/${redirect}`);
         } else {
           navigate("/");
         }
-        setLogged(true);
-        window.sessionStorage.setItem("session", JSON.stringify(data.data));
       },
       { user, password }
     );
   };
 
+  // Función para redirigir a la página de registro en una nueva ventana
+  const handleRegisterClick = () => {
+    navigate("/forms/signup",); // Abrir en una nueva ventana/pestaña
+  };
+
   return (
     <>
-      <div className="container-forms__form-sign form-sign">
-        <div className="form-sign__titulo">
-          <h2>Inicia sesion</h2>
+      <div className="container">
+        <div className="header">
+          <div className="text">Inicia sesión</div>
+          <div className="underline"></div>
         </div>
 
-        <input
-          id="login-username-input"
-          onChange={(event) => {
-            setUser(event.target.value);
-          }}
-          className="form_sign__input-username input-form"
-          type="text"
-          placeholder="usuario"
-        />
-        <input
-          id="login-password-input"
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-          className="form_sign__input-password input-form"
-          type="password"
-          placeholder="contraseña"
-        />
-
-        {loader ? (
-          <div className="effect-loader">
-            <svg className="ring" viewBox="25 25 50 50">
-              <circle cx="50" cy="50" r="20" />
-            </svg>
+        <div className="inputs">
+          <div className="input">
+            <input
+              id="login-username-input"
+              onChange={(event) => setUser(event.target.value)}
+              className="form_sign__input-username input-form"
+              type="text"
+              placeholder="Usuario"
+            />
           </div>
-        ) : (
-          <></>
+
+          <div className="input">
+            <input
+              id="login-password-input"
+              onChange={(event) => setPassword(event.target.value)}
+              className="form_sign__input-password input-form"
+              type="password"
+              placeholder="Contraseña"
+            />
+          </div>
+
+          {loader ? (
+            <div className="effect-loader">
+              <svg className="ring" viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" />
+              </svg>
+            </div>
+          ) : null}
+
+          <div className="forgot-password">
+            <span>¿Olvidaste tu contraseña?</span>
+          </div>
+
+          <div className="submit-container">
+            <div className="submit" onClick={signHandler}>
+              Iniciar sesión
+            </div>
+            <div className="submit" onClick={handleRegisterClick}>
+              <b>Regístrate aquí</b>
+            </div>
+          </div>
+
+          {/* Botón de Google para iniciar sesión */}
+          <div className="google-login">
+            <GoogleLogin
+              onSuccess={(response) => {
+                console.log("Google login success", response);
+              }}
+              onError={() => {
+                console.log("Google login failed");
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Mensaje de error si hay un problema */}
+        {errorMessage && (
+          <div id="container_error" className="form-sign__container-error">
+            {errorMessage}
+          </div>
         )}
-
-        <div id="container_error" className="form-sign__container-error">
-          {errorMessage}
-        </div>
-
-        <div
-          onClick={() => {
-            signHandler();
-          }}
-          className="form-sign__btn-sign btn-form btn--bg_orange"
-          id="btn"
-        >
-          iniciar Sesion
-        </div>
-
-        <GoogleLogin />
-
-        <div className="info">
-          <p>
-            ¿ No tienes una cuenta ?
-            <b>
-              <NavLink className={"nav-link"} to={"/forms/signup"}>
-                {" "}
-                Registrate aqui
-              </NavLink>
-            </b>
-          </p>
-        </div>
       </div>
     </>
   );
