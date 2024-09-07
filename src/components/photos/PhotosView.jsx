@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import "./photosview.css";
 import usePosts from "../../hooks/usePosts";
 import Post from "./Post";
 import sortPhotosInColumns from "../../utils/sortPhotosColumn";
-// eslint-disable-next-line react/prop-types
+import "./photosView.css";
+
 function PhotosView({ query, tag, user }) {
   const [colum1, setColum1] = useState([]);
   const [colum2, setColum2] = useState([]);

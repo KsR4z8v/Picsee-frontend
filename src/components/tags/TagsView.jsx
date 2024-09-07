@@ -15,11 +15,11 @@ function TagsView() {
   return (
     <>
       <div className="container-main__block-tags block-tags">
-        <p className="block-tags___title">Etiquetas Destacadas</p>
+        <p className="block-tags___title">Destacados</p>
         <hr className="block-tags__separator" />
         <div className="block-tags__container-tags ">
           {tags?.map((t, i) => (
-            <NavLink to={`/tg/${t.name}`} key={i} className="block-tags__tag">
+            <NavLink to={`?tag=${t.name}`} key={i} className="block-tags__tag">
               {t.name}
             </NavLink>
           ))}

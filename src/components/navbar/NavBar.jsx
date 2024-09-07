@@ -33,7 +33,7 @@ function NavBar({ openUploadModal }) {
           <input
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                navigate(`/query/${search}`);
+                navigate(`?query=${search}`);
               }
             }}
             className="nav-bar__input-search"

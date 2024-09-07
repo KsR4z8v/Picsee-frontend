@@ -1,15 +1,21 @@
 import { useEffect } from "react";
 import PhotosView from "../photos/PhotosView";
 import TagsView from "../tags/TagsView";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+
 function MainView() {
-  const { tag, query } = useParams();
+  const [searchParams, setUseSearchParams] = useSearchParams();
+
   useEffect(() => {}, []);
+
   return (
     <>
       <div className="container-main">
         <TagsView />
-        <PhotosView tag={tag} query={query} />
+        <PhotosView
+          tag={searchParams.get("tag")}
+          query={searchParams.get("query")}
+        />
       </div>
     </>
   );

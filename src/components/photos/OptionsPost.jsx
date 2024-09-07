@@ -28,8 +28,7 @@ function OptionsPost({ post }) {
       <IoMdArrowDown
         onClick={async () => {
           const resp = await fetch(
-            // eslint-disable-next-line react/prop-types
-            `http://localhost:8000/api/v1/post/${post.id}/download`
+            import.meta.env.VITE_API_URL + `post/${post.id}/download`
           );
 
           if (resp.ok) {
