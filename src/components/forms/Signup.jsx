@@ -71,7 +71,7 @@ function Signup() {
               setFirstNames(e.target.value);
             }}
             id="registro-nombres-input"
-            className="input_signup"
+            className="input_signup input-form"
             type="text"
             placeholder="Nombre *"
           />
@@ -81,7 +81,7 @@ function Signup() {
               setLastNames(e.target.value);
             }}
             id="registro-apellidos-input"
-            className="input_signup"
+            className="input_signup input-form"
             type="text"
             placeholder="Apellidos *"
           />
@@ -91,7 +91,7 @@ function Signup() {
               setUsername(e.target.value);
             }}
             id="registro-usuario-input"
-            className="input_signup"
+            className="input_signup input-form"
             type="text"
             placeholder="Nombre de usuario *"
           />
@@ -100,7 +100,7 @@ function Signup() {
               setEmail(e.target.value);
             }}
             id="registro-correo-input"
-            className="input_signup"
+            className="input_signup input-form"
             type="email"
             placeholder="ejemplo@correo.co *"
           />
@@ -110,7 +110,7 @@ function Signup() {
               setPassword1(e.target.value);
             }}
             id="registro-contraseña-input"
-            className="input_signup"
+            className="input_signup input-form"
             type="password"
             placeholder="Contraseña mínimo 8 caracteres *"
           />
@@ -119,7 +119,7 @@ function Signup() {
               setPassword2(e.target.value);
             }}
             id="registro-contraseña-input-2"
-            className="input_signup"
+            className="input_signup input-form"
             type="password"
             placeholder="Confirmar contraseña *"
           />

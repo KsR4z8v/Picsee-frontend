@@ -45,7 +45,7 @@ function Sign() {
 
   // Función para redirigir a la página de registro en una nueva ventana
   const handleRegisterClick = () => {
-    window.open("/forms/signup", "_blank"); // Abrir en una nueva ventana/pestaña
+    navigate("/forms/signup",); // Abrir en una nueva ventana/pestaña
   };
 
   return (
