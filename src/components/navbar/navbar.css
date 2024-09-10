@@ -120,3 +120,14 @@
     border: none;
     background-color: #e6e6e6;
 }
+
+.nav-link{
+    border: 1px solid rgb(173, 173, 173);
+    color: #a7a7a7;
+    width: 100px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
