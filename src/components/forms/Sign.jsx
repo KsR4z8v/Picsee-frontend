@@ -47,6 +47,13 @@ function Sign() {
     navigate("/forms/signup"); // Abrir en una nueva ventana/pestaña
   };
 
+  // funcion para redirigir a la pagina de recuperar la contraseña en una nueva ventana
+  const handleClick = () =>{
+    navigate("/forms/recover_password");
+  }
+
+
+
   return (
     <>
       <div className="container">
@@ -94,7 +101,9 @@ function Sign() {
             </div>
           </div>
           <div className="forgot-password">
-            <span>¿Olvidaste tu contraseña?</span>
+          <span onClick={handleClick} style={{ color: 'blue', cursor: 'pointer' }}>
+      ¿Olvidaste tu contraseña?
+    </span>
           </div>
 
           {/* Botón de Google para iniciar sesión */}
