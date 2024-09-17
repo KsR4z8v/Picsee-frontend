@@ -66,7 +66,10 @@ function NavBar({ openUploadModal }) {
 
             {!logged ? (
               <li className="menu__item-about item">
-                <NavLink className={"nav-link"} to={"/forms/sign"}>
+                <NavLink
+                  className="menu__btn-login nav-link"
+                  to={"/forms/sign"}
+                >
                   Iniciar sesion
                 </NavLink>
               </li>
