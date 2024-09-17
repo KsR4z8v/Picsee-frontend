@@ -1,6 +1,13 @@
 .container-forms {
     display: flex;
     flex-wrap: nowrap;
+    position: relative;
+}
+
+.icon-back{
+    padding: 5px;
+    cursor: pointer;
+    position: absolute;
 }
 
 .container-photo {
