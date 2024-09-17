@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import usePosts from "../../hooks/usePosts";
 import Post from "./Post";
 import sortPhotosInColumns from "../../utils/sortPhotosColumn";
-import "./photosView.css";
+import "./photosview.css";
 
 function PhotosView({ query, tag, user }) {
   const [colum1, setColum1] = useState([]);

@@ -1,6 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useEffect, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -27,7 +26,7 @@ function Sign() {
     setLoader(true);
     sign(
       (data, err) => {
-        setLoader(false);  // Detener el cargador cuando se recibe respuesta
+        setLoader(false); // Detener el cargador cuando se recibe respuesta
         if (err) {
           return setErrorMessage(err);
         }
@@ -45,7 +44,7 @@ function Sign() {
 
   // Función para redirigir a la página de registro en una nueva ventana
   const handleRegisterClick = () => {
-    navigate("/forms/signup",); // Abrir en una nueva ventana/pestaña
+    navigate("/forms/signup"); // Abrir en una nueva ventana/pestaña
   };
 
   return (
@@ -85,22 +84,23 @@ function Sign() {
             </div>
           ) : null}
 
-          <div className="forgot-password">
-            <span>¿Olvidaste tu contraseña?</span>
-          </div>
-
           <div className="submit-container">
             <div className="submit" onClick={signHandler}>
               Iniciar sesión
             </div>
+
             <div className="submit" onClick={handleRegisterClick}>
               <b>Regístrate aquí</b>
             </div>
           </div>
+          <div className="forgot-password">
+            <span>¿Olvidaste tu contraseña?</span>
+          </div>
 
           {/* Botón de Google para iniciar sesión */}
-          <div className="google-login">
+          <div className="container__google-login">
             <GoogleLogin
+              className="button-google"
               onSuccess={(response) => {
                 console.log("Google login success", response);
               }}

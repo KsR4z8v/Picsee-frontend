@@ -7,7 +7,8 @@
 .block-photos__photo {
     object-fit: contain;
     width: 100%;
-    background-color: #d8d8d8;
+    background-color: #d4d4d4;
+    min-height: min-content;
     max-height: 625px;
 }
 
