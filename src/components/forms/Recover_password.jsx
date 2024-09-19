@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import './Recover_password.css';
-
+import { useState } from "react";
+import "./Recover_password.css";
 
 const Recover_password = () => {
-  const [email, setEmail] = useState('');
-  const [mensaje, setMensaje] = useState('');
+  const [email, setEmail] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   const handleRecovery = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     // Aquí iría la lógica para recuperar la contraseña
     setMensaje(`Se envió el enlace para recuperar la contraseña a ${email}`);
   };
@@ -21,7 +20,7 @@ const Recover_password = () => {
       <form onSubmit={handleRecovery}>
         <div className="inputs_recover">
           <label htmlFor="email">Correo Electrónico</label>
-          <input 
+          <input
             type="email"
             id="email"
             className="input-form_recover"
@@ -31,7 +30,9 @@ const Recover_password = () => {
           />
         </div>
         <div className="submit-container_recover">
-          <button type="submit" className="submit_recover">Enviar</button>
+          <button type="submit" className="submit_recover">
+            Enviar
+          </button>
         </div>
         {mensaje && <p id="container_error_recover">{mensaje}</p>}
       </form>

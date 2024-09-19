@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import OptionsPost from "./OptionsPost";
-
 import "./post.css";
 import capitalizeString from "../../utils/capitalizeString";
 

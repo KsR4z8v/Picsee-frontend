@@ -1,27 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/userContext";
-import "./perfilview.css";
 import PhotosView from "../photos/PhotosView";
 import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import "./perfilview.css";
 
 export default function PerfilView() {
   const { avatar, username } = useContext(UserContext);
+  const { userQuery } = useParams();
   const [fullnameView, setFullnameView] = useState();
   const [usernameView, setUsernameView] = useState();
+  const [avatarView, setAvatarView] = useState();
   const [p, setP] = useState("icon-active");
   const [l, setL] = useState("");
 
   useEffect(() => {
     console.count();
-    setFullnameView(username);
-    setUsernameView(username);
-  }, [username]);
+    if (username !== userQuery) {
+      //traigo informacion del usuario
+      console.log("TODO: Traer info del usuario -> ", userQuery);
+    } else {
+      setFullnameView(userQuery);
+      setUsernameView(userQuery);
+      setAvatarView(avatar);
+    }
+  }, []);
 
   return (
     <div className="block-perfil">
       <div className="block-perfil__container-info-user">
-        <img src={avatar} className="block-perfil__avatar" alt="" />
+        <img src={avatarView} className="block-perfil__avatar" alt="" />
         <div className="block-perfil__container-data">
           <div className="block-perfil__top-data">
             <p className="block-perfil__fullname">{fullnameView}</p>
@@ -66,7 +75,7 @@ export default function PerfilView() {
         </div>
       </div>
       <div className="block-perfil__photos-feed">
-        <PhotosView user={username} />
+        <PhotosView user={userQuery} />
       </div>
     </div>
   );

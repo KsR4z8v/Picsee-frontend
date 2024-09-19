@@ -6,7 +6,7 @@ import { GoArrowLeft } from "react-icons/go";
 
 function FormsView() {
   const [currentImage, setCurrentImage] = useState(0);
-  const navigate  =  useNavigate()
+  const navigate = useNavigate();
   const images = [
     {
       url: "https://wallpapercave.com/wp/wp3207026.jpg",
@@ -41,7 +41,7 @@ function FormsView() {
       } else {
         setCurrentImage(0);
       }
-    }, 5000);
+    }, 50000);
 
     return () => {
       clearInterval(id);
@@ -51,11 +51,15 @@ function FormsView() {
   return (
     <>
       <GoogleOAuthProvider clientId="126393557652-10jkor8qq6s4h196vtbktkco4j343vdu.apps.googleusercontent.com">
-        <div className="container-forms">  
-        <GoArrowLeft onClick={()=>{
-            navigate('/')
-           }} size={30} className="icon-back"/> 
-          <Outlet  />
+        <div className="container-forms">
+          <GoArrowLeft
+            onClick={() => {
+              navigate("/");
+            }}
+            size={30}
+            className="icon-back"
+          />
+          <Outlet />
           <div className="container-photo">
             <img className="user-photo" src={images[currentImage].url} alt="" />
             <img
