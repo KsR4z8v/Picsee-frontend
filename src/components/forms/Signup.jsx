@@ -143,11 +143,10 @@ function Signup() {
             Registrarse
           </div>
 
-          <div className="siTieneCuenta">
+          <div className="has-account">
             <p>
               ¿Ya tienes una cuenta?
               <NavLink className="nav-link" to="/forms/sign">
-                {" "}
                 <b>Inicia aquí</b>
               </NavLink>
             </p>
