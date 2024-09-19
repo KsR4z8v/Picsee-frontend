@@ -11,7 +11,9 @@ const usePosts = () => {
                         q.push(`${i}=${querys[i]}`)
                     }
                 }
-                const resp = await fetch(url + `post${q.length > 0 ? '?' + q.join('&') : ''}`);
+                const token = window.sessionStorage.getItem('session') ? JSON.parse(window.sessionStorage.getItem('session')).token : undefined
+
+                const resp = await fetch(url + `post${q.length > 0 ? '?' + q.join('&') : ''}`, { headers: token ? { auth: token } : {} });
                 const data = await resp.json()
                 if (resp.ok) {
                     callback(data)
@@ -24,12 +26,12 @@ const usePosts = () => {
             }
         }
         ,
-        setLike: async (callback, id_post) => {
+        like: async (callback, postId) => {
             try {
-                const token = JSON.parse(window.sessionStorage.getItem('session')).token
-                const resp = await fetch(url + `post/${id_post}/like`, { method: 'PATCH', headers: { 'auth': token } })
-                if (resp.status != 429 && resp.status != 200) {
-                    callback(undefined, 'No se pudo guardar tu like')
+                const token = JSON.parse(window.sessionStorage.getItem('session'))?.token
+                const resp = await fetch(url + `post/${postId}/like`, { method: 'POST', headers: { auth: token } })
+                if (resp.status != 429 && resp.status != 204) {
+                    callback(undefined, 'No pudimos guardar tu like')
                 }
             } catch (error) {
                 callback(error.message)

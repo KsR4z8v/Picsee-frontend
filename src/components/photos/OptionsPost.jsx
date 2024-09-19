@@ -8,15 +8,15 @@ import usePosts from "../../hooks/usePosts";
 import UserContext from "../../context/userContext";
 // eslint-disable-next-line react/prop-types
 function OptionsPost({ post }) {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(post.liked);
   const { logged } = useContext(UserContext);
-  const { setLike } = usePosts();
+  const { like } = usePosts();
   const likeHandler = () => {
     if (!logged) {
       return alert("Debes de iniciar sesion primero");
     }
     setLiked(!liked);
-    setLike((data, err) => {
+    like((data, err) => {
       if (err) {
         alert(err);
       }
