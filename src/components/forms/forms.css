@@ -5,8 +5,8 @@
 }
 
 .icon-back {
-    padding: 5px;
     cursor: pointer;
+    box-sizing: border-box;
     position: absolute;
 }
 
@@ -19,8 +19,8 @@
 }
 
 .user-avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 100px;
 }
 
@@ -28,8 +28,9 @@
     cursor: pointer;
     display: flex;
     position: absolute;
-    height: 7%;
+    height: 6%;
     width: min-content;
+    text-wrap: nowrap;
     align-items: center;
     border-radius: 50px;
     padding-left: 10px;
@@ -39,13 +40,40 @@
     gap: 10px;
     bottom: 0;
     color: #ffffff;
+    background-color: #00000017;
     backdrop-filter: blur(20px);
 }
 
 .user-photo {
     width: 100%;
+    outline: none;
+    border: none;
+    background-color: #0e1136;
+    display: block;
     height: 100vh;
     object-fit: cover;
+}
+
+.button-prev {
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    left: 2%;
+    color: #dfdfdf33;
+}
+
+.button-next {
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    right: 2%;
+    color: #dfdfdf33;
+}
+
+
+.button-next:hover,
+.button-prev:hover {
+    color: #dfdfdf9d;
 }
 
 
