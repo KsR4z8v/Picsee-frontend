@@ -41,12 +41,12 @@ function FormsView() {
 
     const id = setInterval(() => {
       nextPost();
-    }, 10000);
+    }, 7000);
 
     return () => {
       clearInterval(id);
     };
-  }, [currentPost]);
+  }, [currentPost, posts]);
 
   return (
     <>
