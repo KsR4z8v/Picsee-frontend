@@ -38,10 +38,11 @@ function PostUploadPreview({ f, deleteFile }) {
 
               parent.appendChild(boxTag);
               e.target.value = "";
+              e.target.focus();
             }
           }}
           className="block-upload__input-tag"
-          placeholder="tags.."
+          placeholder="etiqueta"
         />
       </div>
     </div>

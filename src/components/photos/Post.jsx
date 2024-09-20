@@ -22,7 +22,7 @@ function Post({ post }) {
         className="block-photos__container-post"
       >
         <img
-          src={post.image.url}
+          src={post.image}
           className="block-photos__photo"
           alt=""
           loading="lazy"

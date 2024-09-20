@@ -4,7 +4,7 @@ import TagsView from "../tags/TagsView";
 import { useSearchParams } from "react-router-dom";
 
 function MainView() {
-  const [searchParams, setUseSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {}, []);
 

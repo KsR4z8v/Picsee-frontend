@@ -94,7 +94,7 @@ function UploadPhotosModal({ visibleModel }) {
         </div>
         <div className="block-upload__container-options">
           <div
-            className="block-upload__btn-upload-files btn-form"
+            className="block-upload__btn-upload-files "
             onClick={uploadFilesHandler}
           >
             Subir
