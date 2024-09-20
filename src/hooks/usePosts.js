@@ -3,7 +3,6 @@ const usePosts = () => {
 
     return {
         get: async (callback, querys) => {
-
             try {
                 let q = []
                 for (const i in querys) {
@@ -33,6 +32,19 @@ const usePosts = () => {
                 if (resp.status != 429 && resp.status != 204) {
                     callback(undefined, 'No pudimos guardar tu like')
                 }
+            } catch (error) {
+                callback(error.message)
+            }
+        },
+        getRelevant: async (callback) => {
+            try {
+
+                const resp = await fetch(url + `post?query=relevant`, { method: 'GET' })
+                if (resp.status != 429 && resp.status != 200) {
+                    callback(undefined, 'No se pudieron obtener los ultimos posts')
+                }
+                const data = await resp.json()
+                callback(data)
             } catch (error) {
                 callback(error.message)
             }

@@ -3,50 +3,50 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./forms.css";
 import { useEffect, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
+import usePosts from "../../hooks/usePosts";
+import { GrNext } from "react-icons/gr";
+import { GrPrevious } from "react-icons/gr";
 
 function FormsView() {
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentPost, setCurrentPost] = useState(0);
+  const [posts, setPosts] = useState([]);
+  const { getRelevant } = usePosts();
   const navigate = useNavigate();
-  const images = [
-    {
-      url: "https://wallpapercave.com/wp/wp3207026.jpg",
-      username: "oscar",
-      avatar: "https://wallpapercave.com/wp/wp3207026.jpg",
-    },
-    {
-      url: "https://images.alphacoders.com/565/565448.jpg",
-      username: "Davilez32",
-      avatar: "https://wallpapercave.com/wp/wp3207026.jpg",
-    },
-    {
-      url: "https://images.hdqwalls.com/download/beautiful-landscape-nature-scenery-1d-2560x1440.jpg",
-      username: "Santiago23",
-      avatar: "https://wallpapercave.com/wp/wp3207026.jpg",
-    },
-    {
-      url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.wallpapersden.com%2Fimage%2Fdownload%2Fstarfield-2023_bmVsaWeUmZqaraWkpJRmbmdlrWZlbWU.jpg&f=1&nofb=1&ipt=c611b1d2be19a16172f1611c550bbfee8c4040cb5d251830fffa64227b7c264f&ipo=images",
-      username: "Oscaraso",
-      avatar: "https://wallpapercave.com/wp/wp3207026.jpg",
-    },
-    {
-      url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2FllgBZW0.jpg&f=1&nofb=1&ipt=215e90cd8a89a479f57ac40c94aab066e6addc70ec842bbb40d0b2245cf19c4b&ipo=images",
-      username: "Wilson",
-      avatar: "https://wallpapercave.com/wp/wp3207026.jpg",
-    },
-  ];
+
+  const nextPost = () => {
+    if (currentPost < posts.length - 1) {
+      setCurrentPost(currentPost + 1);
+    } else {
+      setCurrentPost(0);
+    }
+  };
+
+  const prevPost = () => {
+    if (currentPost > 0) {
+      setCurrentPost(currentPost - 1);
+    } else {
+      setCurrentPost(posts.length - 1);
+    }
+  };
+
   useEffect(() => {
+    if (posts.length === 0) {
+      getRelevant((data, err) => {
+        if (err) {
+          return alert(err);
+        }
+        setPosts(data.data.posts);
+      });
+    }
+
     const id = setInterval(() => {
-      if (currentImage < images.length - 1) {
-        setCurrentImage(currentImage + 1);
-      } else {
-        setCurrentImage(0);
-      }
-    }, 50000);
+      nextPost();
+    }, 10000);
 
     return () => {
       clearInterval(id);
     };
-  }, [currentImage]);
+  }, [currentPost]);
 
   return (
     <>
@@ -56,19 +56,25 @@ function FormsView() {
             onClick={() => {
               navigate("/");
             }}
-            size={30}
+            size={40}
             className="icon-back"
           />
           <Outlet />
           <div className="container-photo">
-            <img className="user-photo" src={images[currentImage].url} alt="" />
+            <GrPrevious onClick={nextPost} size={50} className="button-prev" />
+            <GrNext onClick={prevPost} size={50} className="button-next" />
+            <img
+              className="user-photo"
+              src={posts[currentPost]?.image}
+              alt=""
+            />
             <div className="card-user-info">
               <img
                 className="user-avatar"
-                src={images[currentImage].avatar}
+                src={posts[currentPost]?.author.urlAvatar}
                 alt=""
               />
-              <p>@{images[currentImage].username}</p>
+              <p>@{posts[currentPost]?.author.username}</p>
             </div>
           </div>
         </div>
