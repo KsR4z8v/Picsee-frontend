@@ -4,11 +4,13 @@ import Signup from "../components/forms/Signup";
 import Sign from "../components/forms/Sign";
 import Home from "../pages/Home";
 import Recover_password from "../components/forms/Recover_password";
+import CodeInput from "../components/forms/Codeinput";
 import MainView from "../components/mainview/MainView";
 import { UserContextProvider } from "../context/userContext";
 import PerfilView from "../components/user/PerfilView";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import "./app.css";
+
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
       { path: "sign/", element: <Sign /> },
       { path: "signup", element: <Signup /> },
       { path: "Recover_password", element: <Recover_password /> },
+      { path: "Codeinput", element: <CodeInput /> },
     ],
   },
 ]);
