@@ -16,8 +16,6 @@ function Sign() {
   const navigate = useNavigate();
   const { sign } = useUser();
 
-  useEffect(() => {}, []);
-
   const signHandler = () => {
     setErrorMessage("");
     if (user.trim() === "" || password.trim() === "") {
@@ -42,17 +40,7 @@ function Sign() {
     );
   };
 
-  // Función para redirigir a la página de registro en una nueva ventana
-  const handleRegisterClick = () => {
-    navigate("/forms/signup"); // Abrir en una nueva ventana/pestaña
-  };
-
-  // funcion para redirigir a la pagina de recuperar la contraseña en una nueva ventana
-  const handleClick = () =>{
-    navigate("/forms/recover_password");
-  }
-
-
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -69,7 +57,7 @@ function Sign() {
               onChange={(event) => setUser(event.target.value)}
               className="form_sign__input-username input-form"
               type="text"
-              placeholder="Usuario"
+              placeholder="Usuario o email"
             />
           </div>
 
@@ -82,28 +70,34 @@ function Sign() {
               placeholder="Contraseña"
             />
           </div>
-
-          {loader ? (
-            <div className="effect-loader">
-              <svg className="ring" viewBox="25 25 50 50">
-                <circle cx="50" cy="50" r="20" />
-              </svg>
+          {/* Mensaje de error si hay un problema */}
+          {errorMessage && (
+            <div id="container_error" className="form-sign__container-error">
+              {errorMessage}
             </div>
-          ) : null}
+          )}
+
+          <div className="forgot-password">
+            <span
+              onClick={() => navigate("/forms/recoverpass")}
+              style={{ cursor: "pointer" }}
+            >
+              Olvidé mi contraseña
+            </span>
+          </div>
 
           <div className="submit-container">
             <div className="submit" onClick={signHandler}>
-              Iniciar sesión
+              {loader ? (
+                <span className="loader form-loader"></span>
+              ) : (
+                "Iniciar sesion"
+              )}
             </div>
 
-            <div className="submit" onClick={handleRegisterClick}>
+            <div className="submit" onClick={() => navigate("/forms/signup")}>
               <b>Regístrate aquí</b>
             </div>
-          </div>
-          <div className="forgot-password">
-          <span onClick={handleClick} style={{ color: 'blue', cursor: 'pointer' }}>
-      ¿Olvidaste tu contraseña?
-    </span>
           </div>
 
           {/* Botón de Google para iniciar sesión */}
@@ -119,13 +113,6 @@ function Sign() {
             />
           </div>
         </div>
-
-        {/* Mensaje de error si hay un problema */}
-        {errorMessage && (
-          <div id="container_error" className="form-sign__container-error">
-            {errorMessage}
-          </div>
-        )}
       </div>
     </>
   );

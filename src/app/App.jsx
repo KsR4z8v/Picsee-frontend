@@ -3,7 +3,8 @@ import FormsView from "../components/forms/FormsView";
 import Signup from "../components/forms/Signup";
 import Sign from "../components/forms/Sign";
 import Home from "../pages/Home";
-import Recover_password from "../components/forms/Recover_password";
+import RecoverPass from "../components/forms/RecoverPass";
+import UpdatePass from "../components/forms/UpdatePass";
 import MainView from "../components/mainview/MainView";
 import { UserContextProvider } from "../context/userContext";
 import PerfilView from "../components/user/PerfilView";
@@ -37,7 +38,8 @@ const router = createBrowserRouter([
     children: [
       { path: "sign/", element: <Sign /> },
       { path: "signup", element: <Signup /> },
-      { path: "Recover_password", element: <Recover_password /> },
+      { path: "recoverpass", element: <RecoverPass /> },
+      { path: "newpass", element: <UpdatePass /> },
     ],
   },
 ]);

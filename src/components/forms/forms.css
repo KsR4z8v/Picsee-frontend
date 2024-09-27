@@ -21,6 +21,7 @@
 .user-avatar {
     width: 40px;
     height: 40px;
+    background-color: #dfdfdf;
     border-radius: 100px;
 }
 
@@ -143,9 +144,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #141951;
+    color: #474850;
     cursor: pointer;
-    font-size: 19px;
+    font-size: 17px;
+    transition: all 0.4s;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
 }
 
 .submit-container {
@@ -176,8 +182,13 @@
 #container_error {
     color: #ff0033;
     text-align: center;
-    margin-top: 15px;
     font-size: 18px;
+}
+
+.form-loader {
+    height: 20px;
+    width: 20px;
+    border: 2px solid #ffffff;
 }
 
 /* ----------------------------------------------sing up--------------------------------------------------*/
