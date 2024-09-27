@@ -73,7 +73,7 @@ function Signup() {
             id="registro-nombres-input"
             className="input_signup input-form"
             type="text"
-            placeholder="Nombre *"
+            placeholder="Nombres"
           />
 
           <input
@@ -83,7 +83,7 @@ function Signup() {
             id="registro-apellidos-input"
             className="input_signup input-form"
             type="text"
-            placeholder="Apellidos *"
+            placeholder="Apellidos"
           />
 
           <input
@@ -93,7 +93,8 @@ function Signup() {
             id="registro-usuario-input"
             className="input_signup input-form"
             type="text"
-            placeholder="Nombre de usuario *"
+            placeholder="Nombre de usuario"
+            required
           />
           <input
             onChange={(e) => {
@@ -102,7 +103,8 @@ function Signup() {
             id="registro-correo-input"
             className="input_signup input-form"
             type="email"
-            placeholder="ejemplo@correo.co *"
+            placeholder="ejemplo@correo.co"
+            required
           />
 
           <input
@@ -112,7 +114,8 @@ function Signup() {
             id="registro-contraseña-input"
             className="input_signup input-form"
             type="password"
-            placeholder="Contraseña mínimo 8 caracteres *"
+            placeholder="Contraseña mínimo 8 caracteres"
+            required
           />
           <input
             onChange={(e) => {
@@ -121,18 +124,10 @@ function Signup() {
             id="registro-contraseña-input-2"
             className="input_signup input-form"
             type="password"
-            placeholder="Confirmar contraseña *"
+            placeholder="Confirmar contraseña"
+            required
           />
 
-          {loader ? (
-            <div className="effect-loader">
-              <svg className="ring" viewBox="25 25 50 50" stroke-width="5">
-                <circle cx="50" cy="50" r="20" />
-              </svg>
-            </div>
-          ) : (
-            <></>
-          )}
           <div id="container_error_signup">{errorMessage}</div>
 
           <div
@@ -140,7 +135,11 @@ function Signup() {
             id="btn_registro"
             className="submit_signup"
           >
-            Registrarse
+            {loader ? (
+              <span className="loader form-loader"></span>
+            ) : (
+              "Registrar"
+            )}
           </div>
 
           <div className="has-account">

@@ -45,11 +45,7 @@ function PhotosView({ query, tag, user }) {
           <div className={`block-photos__column-3 column`}>{colum3.map(f)}</div>
         </div>
         {loader ? (
-          <div className="effect-loader">
-            <svg className="ring" viewBox="25 25 50 50" strokeWidth="5">
-              <circle cx="50" cy="50" r="20" />
-            </svg>
-          </div>
+          <span className="loader photos-main-loader"></span>
         ) : (
           (() => {
             const sum = colum1.length + colum2.length + colum3.length;
