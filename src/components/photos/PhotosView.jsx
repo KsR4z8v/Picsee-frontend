@@ -1,35 +1,65 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import usePosts from "../../hooks/usePosts";
 import Post from "./Post";
 import sortPhotosInColumns from "../../utils/sortPhotosColumn";
 import "./photosview.css";
 
 function PhotosView({ query, tag, user }) {
-  const [colum1, setColum1] = useState([]);
-  const [colum2, setColum2] = useState([]);
-  const [colum3, setColum3] = useState([]);
+  const [columns, setColumns] = useState([[], [], []]);
   const [loader, setLoader] = useState(false);
+  const cursor = useRef(null);
+  const loadMore = useRef(false);
+  const blockPhotos = useRef(null);
 
   const { get } = usePosts();
-  useEffect(() => {
-    setLoader(true);
-    setColum1([]);
-    setColum2([]);
-    setColum3([]);
+
+  const getPosts = () => {
+    // console.count("TRAE POSTS");
+    // console.log(cursor);
     get(
       (data, err) => {
+        setLoader(false);
+        loadMore.current = false;
         if (err) {
           return alert(err);
         }
         const sort = sortPhotosInColumns(data.data.posts);
-        setColum1(sort[0]);
-        setColum2(sort[1]);
-        setColum3(sort[2]);
-        setLoader(false);
+        setColumns((prev) => [
+          [...prev[0], ...sort[0]],
+          [...prev[1], ...sort[1]],
+          [...prev[2], ...sort[2]],
+        ]);
+
+        cursor.current = data.cursor;
       },
-      { query, tag, user }
+      { query, tag, user, cursor: cursor.current }
     );
+  };
+
+  const scrollHandler = (e) => {
+    const container = e.target;
+    const scrollTop = container.scrollTop;
+    const scrollHeight = container.scrollHeight;
+    const clientHeight = container.clientHeight;
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      if (!loadMore.current) {
+        loadMore.current = true;
+        getPosts();
+      }
+    }
+  };
+
+  useEffect(() => {
+    //console.count("RENDEREZIA");
+    cursor.current = null;
+    setLoader(true);
+    setColumns([[], [], []]);
+    getPosts();
+    blockPhotos.current?.addEventListener("scroll", scrollHandler);
+    return () => {
+      blockPhotos.current?.removeEventListener("scroll", scrollHandler);
+    };
   }, [tag, query, user]);
 
   const f = (p, i) => {
@@ -38,18 +68,26 @@ function PhotosView({ query, tag, user }) {
 
   return (
     <>
-      <div className="container-main__block-photos block-photos">
+      <div
+        ref={blockPhotos}
+        className="container-main__block-photos block-photos"
+      >
         <div className="block-photos__container-columns">
-          <div className={`block-photos__column-1 column`}>{colum1.map(f)}</div>
-          <div className={`block-photos__column-2 column`}>{colum2.map(f)}</div>
-          <div className={`block-photos__column-3 column`}>{colum3.map(f)}</div>
+          <div className={`block-photos__column-1 column`}>
+            {columns[0].map(f)}
+          </div>
+          <div className={`block-photos__column-2 column`}>
+            {columns[1].map(f)}
+          </div>
+          <div className={`block-photos__column-3 column`}>
+            {columns[2].map(f)}
+          </div>
         </div>
         {loader ? (
           <span className="loader photos-main-loader"></span>
         ) : (
           (() => {
-            const sum = colum1.length + colum2.length + colum3.length;
-            if (sum === 0) {
+            if (columns.reduce((x, y) => x + y.length, 0) === 0) {
               return (
                 <div className="container-main__info-box">
                   Parece que no hay imágenes . ¡Explora otros tags o prueba en

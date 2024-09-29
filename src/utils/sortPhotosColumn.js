@@ -1,17 +1,12 @@
-const sortPhotosInColumns = (photos) => {
-    let i_ = [];
-    let j_ = [];
-    let k_ = [];
-    for (let i = 0; i < Math.ceil(photos.length / 3); i++) {
-        i_.push(photos[i + 2 * i]);
+const sortPhotosInColumns = (photos, random = true) => {
 
-        if (photos[i + 1 + 2 * i]) {
-            j_.push(photos[i + 1 + 2 * i]);
-        }
-        if (photos[i + 2 + 2 * i]) {
-            k_.push(photos[i + 2 + 2 * i]);
-        }
+    const columns = [[], [], []]
+    let c = random ? Math.floor(Math.random() * 3) : 0
+    for (let i = 0; i < photos.length; i++) {
+        columns[c].push(photos[i])
+        c++
+        if (c === 3) c = 0
     }
-    return [i_, j_, k_]
+    return columns
 }
 export default sortPhotosInColumns
