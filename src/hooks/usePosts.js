@@ -59,10 +59,7 @@ const usePosts = () => {
                         tags.push(files[i].tags)
                     }
                 }
-                console.log(tags);
-
                 form.append('tags', JSON.stringify(tags))
-                throw new Error('test')
                 const token = JSON.parse(window.sessionStorage.getItem('session')).token
                 const resp = await fetch(url + 'post', {
                     method: 'POST',
@@ -73,8 +70,10 @@ const usePosts = () => {
                 if (resp.status !== 204) {
                     const data = await resp.json()
                     callback(undefined, data.error.details)
+                } else {
+                    return callback()
                 }
-                return callback()
+
             } catch (e) {
                 callback(undefined, e.message)
             }
