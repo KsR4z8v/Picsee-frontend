@@ -8,6 +8,7 @@ import PostUploadPreview from "./PostUploadPreview";
 // eslint-disable-next-line react/prop-types
 function UploadPhotosModal({ visibleModel }) {
   const [files, setFiles] = useState([]);
+  const [loader, setLoader] = useState(false);
   const { upload } = usePosts();
 
   const setFile = (f) => {
@@ -15,15 +16,18 @@ function UploadPhotosModal({ visibleModel }) {
       return alert("Solo pudes subir maximo 5 fotos");
     }
     if (f.type.search("image") != 0) {
-      return alert("Porfavor sube solo imagenes");
+      return alert("Solo debes subir imagenes");
     }
+    f.tags = [];
     setFiles([...files, f]);
   };
   const uploadFilesHandler = () => {
     if (files.length <= 0) {
-      return alert("Debes cargar una foto para subir");
+      return alert("Por favor, sube al menos una foto");
     }
+    setLoader(true);
     upload((data, error) => {
+      setLoader(false);
       if (error) {
         return alert(error);
       }
@@ -36,9 +40,18 @@ function UploadPhotosModal({ visibleModel }) {
     setFiles([...files.slice(0, index), ...files.slice(index + 1)]);
   };
 
-  const p = (f, i) => {
-    return <PostUploadPreview key={i} f={f} deleteFile={deleteFileHandler} />;
+  const p = (f) => {
+    console.log(f);
+    return (
+      <PostUploadPreview
+        key={f.lastModified}
+        f={f}
+        tags_={f.tags}
+        deleteFile={deleteFileHandler}
+      />
+    );
   };
+
   return (
     <div className="block-upload">
       <IoMdClose
@@ -50,7 +63,6 @@ function UploadPhotosModal({ visibleModel }) {
       />
       <div className="block-upload__container-upload">
         <div className="block-upload__drop-zone">
-          <label>Subir fotos</label>
           <p className="block-upload__title-drop">
             Da click o arrastra una imagen en esta zona
           </p>
@@ -66,7 +78,7 @@ function UploadPhotosModal({ visibleModel }) {
             className="block-upload__container-previews"
           >
             {(() => {
-              const sort = sortPhotosInColumns(files);
+              const sort = sortPhotosInColumns(files, false);
               return (
                 <>
                   <div className="block-upload__column-1 column">
@@ -97,7 +109,11 @@ function UploadPhotosModal({ visibleModel }) {
             className="block-upload__btn-upload-files "
             onClick={uploadFilesHandler}
           >
-            Subir
+            {loader ? (
+              <span className="loader loader-upload-file"></span>
+            ) : (
+              "Subir imagen"
+            )}
           </div>
         </div>
       </div>

@@ -1,14 +1,20 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-function PostUploadPreview({ f, deleteFile }) {
-  const url = URL.createObjectURL(f);
 
-  useEffect(() => {
-    if (!f.tags) {
-      f.tags = [];
-    }
-  }, []);
+import exampleTags from "./exampleTags.json";
+
+function PostUploadPreview({ f, deleteFile, tags_ }) {
+  const [tags, setTags] = useState(tags_);
+
+  const deleteTag = (t) => {
+    const tagsFilter = tags.filter((n) => n !== t);
+    setTags(tagsFilter);
+    f.tags = tagsFilter;
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <div className="block-upload_container-photo">
       <IoMdClose
@@ -19,8 +25,25 @@ function PostUploadPreview({ f, deleteFile }) {
         size={30}
         className="block-upload__icon-delete icon-x"
       />
-      <img className="block-upload_photo-uploaded" src={url} alt="" />
+      <img
+        className="block-upload_photo-uploaded"
+        src={URL.createObjectURL(f)}
+        alt=""
+      />
       <div className="block-upload__container-tags">
+        {tags.map((t, i) => (
+          <div key={i} className="block-upload__tag-closed">
+            <IoMdClose
+              onClick={(e) => {
+                e.preventDefault();
+                deleteTag(t);
+              }}
+              size={20}
+              className="block-upload__icon-delete-tag"
+            />
+            {t}
+          </div>
+        ))}
         <input
           type="text"
           onKeyDown={(e) => {
@@ -28,21 +51,25 @@ function PostUploadPreview({ f, deleteFile }) {
               if (e.target.value.trim() === "") {
                 return alert("No deben de haber tags vacios");
               }
-
-              const parent = e.target.parentNode;
-              const boxTag = document.createElement("DIV");
-              boxTag.classList.add("block-upload__tag-closed");
-
-              f.tags.push(e.target.value);
-              boxTag.appendChild(document.createTextNode(e.target.value));
-
-              parent.appendChild(boxTag);
+              const tagText = e.target.value;
+              if (tags.some((t) => t === tagText)) {
+                return alert("Este tag ya ha sido agregado");
+              }
+              setTags([...tags, tagText]);
+              f.tags.push(tagText);
               e.target.value = "";
               e.target.focus();
             }
           }}
           className="block-upload__input-tag"
-          placeholder="etiqueta"
+          placeholder={(() => {
+            const s = exampleTags.length - 1;
+            const r = Math.floor(Math.random() * (s - 3));
+            return exampleTags
+              .slice(r, r + 3)
+              .join(" , ")
+              .concat(" ...");
+          })()}
         />
       </div>
     </div>
