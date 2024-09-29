@@ -33,7 +33,7 @@ function NavBar({ openUploadModal }) {
           <input
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                navigate(`?query=${search}`);
+                navigate(`?q=${search}`);
               }
             }}
             className="nav-bar__input-search"
@@ -47,7 +47,7 @@ function NavBar({ openUploadModal }) {
           <IoIosSearch
             className="nav-bar_icon_search"
             onClick={() => {
-              navigate(`/query/${search}`);
+              navigate(`?q=${search}`);
             }}
           />
         </div>

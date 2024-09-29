@@ -19,7 +19,7 @@ function TagsView() {
         <hr className="block-tags__separator" />
         <div className="block-tags__container-tags ">
           {tags?.map((t, i) => (
-            <NavLink to={`?tag=${t.name}`} key={i} className="block-tags__tag">
+            <NavLink to={`?t=${t.name}`} key={i} className="block-tags__tag">
               {t.name}
             </NavLink>
           ))}

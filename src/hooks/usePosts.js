@@ -55,27 +55,28 @@ const usePosts = () => {
                 const tags = []
                 for (let i = 0; i < files.length; i++) {
                     form.append('photos', files[i])
-                    tags.push(files[i].tags)
+                    if (files[i].tags.length > 0) {
+                        tags.push(files[i].tags)
+                    }
                 }
+                console.log(tags);
 
                 form.append('tags', JSON.stringify(tags))
-
+                throw new Error('test')
                 const token = JSON.parse(window.sessionStorage.getItem('session')).token
                 const resp = await fetch(url + 'post', {
                     method: 'POST',
                     headers: { 'auth': token },
                     body: form
                 })
-                const data = await resp.json()
-                /*   if (resp.ok) {
-                      return callback(data.images)
-                  } */
-                if (data.error.code === 13) {
-                    callback(undefined, 'Ups algo ha salido mal')
-                }
 
+                if (resp.status !== 204) {
+                    const data = await resp.json()
+                    callback(undefined, data.error.details)
+                }
+                return callback()
             } catch (e) {
-                callback(e.message)
+                callback(undefined, e.message)
             }
 
         }

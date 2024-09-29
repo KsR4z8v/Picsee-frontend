@@ -12,10 +12,7 @@ function MainView() {
     <>
       <div className="container-main">
         <TagsView />
-        <PhotosView
-          tag={searchParams.get("tag")}
-          query={searchParams.get("query")}
-        />
+        <PhotosView tag={searchParams.get("t")} query={searchParams.get("q")} />
       </div>
     </>
   );
