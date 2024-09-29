@@ -1,10 +1,13 @@
 .block-photos {
     padding-top: 20px;
+    box-sizing: border-box;
     display: flex;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
     min-height: 200px;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .container-main__info-box {

@@ -1,7 +1,4 @@
 .block-tags {
-    position: sticky;
-    top: 70px;
-    z-index: 4;
     display: flex;
     gap: 1%;
     border-bottom: 1px solid #29292910;
