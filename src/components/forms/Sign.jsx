@@ -1,14 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useEffect, useState, useContext } from "react";
 import useUser from "../../hooks/useUser";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import UserContext from "../../context/userContext";
 import "./forms.css";
 
 function Sign() {
-  const { redirect } = useParams();
   const [user, setUser] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,22 +29,35 @@ function Sign() {
         }
         setLogged(true);
         window.sessionStorage.setItem("session", JSON.stringify(data.data));
-        if (redirect) {
-          navigate(`/${redirect}`);
-        } else {
-          navigate("/");
-        }
+        navigate(`/?${searchParams.toString()}`);
       },
       { user, password }
     );
   };
 
+  const signGooglePlatform = (credentials) => {
+    setErrorMessage("");
+    setLoader(true);
+    sign(
+      (data, err) => {
+        setLoader(false); // Detener el cargador cuando se recibe respuesta
+        if (err) {
+          return setErrorMessage(err);
+        }
+        setLogged(true);
+        window.sessionStorage.setItem("session", JSON.stringify(data.data));
+        navigate("/");
+      },
+      credentials,
+      true
+    );
+  };
   useEffect(() => {}, []);
 
   return (
     <>
-      <div className="container">
-        <div className="header">
+      <div className="container-form">
+        <div className="header-form">
           <div className="text">Inicia sesión</div>
           <div className="underline"></div>
         </div>
@@ -68,6 +80,9 @@ function Sign() {
               className="form_sign__input-password input-form"
               type="password"
               placeholder="Contraseña"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") signHandler();
+              }}
             />
           </div>
           {/* Mensaje de error si hay un problema */}
@@ -82,7 +97,7 @@ function Sign() {
               onClick={() => navigate("/forms/recoverpass")}
               style={{ cursor: "pointer" }}
             >
-              Olvidé mi contraseña
+              ¿Olvidaste tu contraseña?
             </span>
           </div>
 
@@ -105,10 +120,10 @@ function Sign() {
             <GoogleLogin
               className="button-google"
               onSuccess={(response) => {
-                console.log("Google login success", response);
+                signGooglePlatform(response);
               }}
               onError={() => {
-                console.log("Google login failed");
+                alert("Google login failed");
               }}
             />
           </div>

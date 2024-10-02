@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     path: "/forms",
     element: <FormsView />,
     children: [
-      { path: "sign/", element: <Sign /> },
+      { path: "sign", element: <Sign /> },
       { path: "signup", element: <Signup /> },
       { path: "recoverpass", element: <RecoverPass /> },
       { path: "newpass", element: <UpdatePass /> },

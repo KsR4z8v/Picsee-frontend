@@ -3,9 +3,9 @@ import crypto from 'crypto-js'
 const useUser = () => {
     const url = import.meta.env.VITE_API_URL
     return {
-        sign: async (callback, credentials) => {
+        sign: async (callback, credentials, platform = false) => {
             try {
-                const resp = await fetch(url + 'auth/sign', {
+                const resp = await fetch(url + `auth/${platform ? 'platform' : 'sign'}`, {
                     method: 'POST',
                     mode: 'cors',
                     headers: { 'content-type': 'application/json' },
@@ -15,7 +15,7 @@ const useUser = () => {
                 if (resp.ok) {
                     callback(data)
                 } else {
-                    //console.log(data.error);
+                    console.log(data);
                     if (data.error.code === 17) {
                         callback(undefined, 'Lo sentimos, pero no encontramos ninguna cuenta con ese nombre de usuario o correo electrónico.')
                     }

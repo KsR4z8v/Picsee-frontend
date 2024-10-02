@@ -50,7 +50,7 @@ function FormsView() {
 
   return (
     <>
-      <GoogleOAuthProvider clientId="126393557652-10jkor8qq6s4h196vtbktkco4j343vdu.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="82745131280-8af143ou1u2l50hhmrqklle47cpoeajr.apps.googleusercontent.com">
         <div className="container-forms">
           <GoArrowLeft
             onClick={() => {

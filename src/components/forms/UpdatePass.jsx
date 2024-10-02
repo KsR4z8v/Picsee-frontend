@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Codeinput.css";
 import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -8,19 +7,25 @@ export default function UpdatePass() {
   const [newPassword, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loader, setLoader] = useState(false);
   const { updatePassword } = useUser();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const redirectToInit = () => {
-    navigate("/");
-  };
-
   const handleSubmit = () => {
+    if (newPassword != confirmPassword) {
+      return setMessage("Las contraseñas no coinciden");
+    }
+    if (newPassword.length < 9) {
+      return setMessage("La contraseña debe tener al menos 9 caracteres");
+    }
+    setLoader(true);
+
     updatePassword(
       (data, err) => {
+        setLoader(false);
         if (err) {
-          setMessage(
+          return setMessage(
             "Ups. tuvimos problemas para actualizar tu contraseña, intenta nuevamete"
           );
         }
@@ -32,40 +37,50 @@ export default function UpdatePass() {
   };
 
   useEffect(() => {
-    if (!searchParams.get("t")) {
-      redirectToInit();
-    }
+    // if (!searchParams.get("t")) {
+    //   navigate("/");
+    // }
   }, []);
 
   return (
-    <div className="CodeInput">
-      <h2>Recuperacion</h2>
-      <div>
-        <div className="inputs_code">
-          <label htmlFor="newPassword">Nueva Contraseña</label>
+    <div className="container-form">
+      <div className="header-form">
+        <div className="text">Actualizar Contraseña</div>
+        <div className="underline"></div>
+      </div>
+
+      <div className="inputs">
+        <div className="input">
           <input
+            id="login-password-input"
+            onChange={(event) => setPassword(event.target.value)}
+            className="form_sign__input-password input-form"
             type="password"
-            id="newPassword"
-            className="input-form_code"
-            value={newPassword}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <label htmlFor="newPassword">Confirmar contraseña</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            className="input-form_code"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            placeholder="Contraseña"
           />
         </div>
-        <div className="submit-container_code">
-          <div className="submit_code" onClick={handleSubmit}>
-            Cambiar Contraseña
+        <div className="input">
+          <input
+            id="login-password-input"
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            className="form_sign__input-password input-form"
+            type="password"
+            placeholder="Contraseña"
+          />
+        </div>
+        {message && (
+          <div id="container_error" className="form-sign__container-error">
+            {message}
           </div>
-          {message && <p id="container_error_code">{message}</p>}
+        )}
+        <div className="submit-container">
+          <div className="submit" onClick={handleSubmit}>
+            {loader ? (
+              <span className="loader form-loader"></span>
+            ) : (
+              "Actualizar"
+            )}
+          </div>
         </div>
       </div>
     </div>

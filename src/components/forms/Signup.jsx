@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 import UserContext from "../../context/userContext";
 
 function Signup() {
-  const { redirect } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [loader, setLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
@@ -30,6 +30,10 @@ function Signup() {
     if (password1 !== password2) {
       return setErrorMessage("Las contraseñas no coinciden");
     }
+
+    if (password1.length < 9) {
+      return setErrorMessage("La contraseña debe tener al menos 9 caracteres");
+    }
     setLoader(true);
     create(
       (data, err) => {
@@ -37,13 +41,9 @@ function Signup() {
         if (err) {
           return setErrorMessage(err);
         }
-        if (redirect) {
-          navigate(`/${redirect}`);
-        } else {
-          navigate("/");
-        }
         setLogged(true);
         window.sessionStorage.setItem("session", JSON.stringify(data.data));
+        navigate(`/?${searchParams.toString()}`);
       },
       {
         username,
@@ -59,13 +59,13 @@ function Signup() {
 
   return (
     <>
-      <div className="container_signup">
+      <div className="container-form">
         <div className="header_signup">
-          <div className="text_signup">Registro</div>
+          <div className="text">Registro</div>
           <div className="underline_signup"></div>
         </div>
 
-        <div className="inputs_signup">
+        <div className="inputs">
           <input
             onChange={(e) => {
               setFirstNames(e.target.value);
@@ -114,7 +114,7 @@ function Signup() {
             id="registro-contraseña-input"
             className="input_signup input-form"
             type="password"
-            placeholder="Contraseña mínimo 8 caracteres"
+            placeholder="Contraseña mínimo 9 caracteres"
             required
           />
           <input
