@@ -2,7 +2,7 @@ const usePosts = () => {
     const url = import.meta.env.VITE_API_URL
 
     return {
-        get: async (callback, querys) => {
+        get: async (cb, querys) => {
             try {
                 let q = []
                 for (const i in querys) {
@@ -11,17 +11,13 @@ const usePosts = () => {
                     }
                 }
                 const token = window.sessionStorage.getItem('session') ? JSON.parse(window.sessionStorage.getItem('session')).token : undefined
-
                 const resp = await fetch(url + `post${q.length > 0 ? '?' + q.join('&') : ''}`, { headers: token ? { auth: token } : {} });
                 const data = await resp.json()
                 if (resp.ok) {
-                    callback(data)
-                } else {
-                    console.log(data);
+                    cb(data)
                 }
-
             } catch (error) {
-                callback(undefined, error.message)
+                cb(undefined, error.message)
             }
         }
         ,

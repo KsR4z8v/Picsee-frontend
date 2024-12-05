@@ -1,8 +1,8 @@
 import { GoogleLogin } from "@react-oauth/google";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import useUser from "../../hooks/useUser";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import UserContext from "../../context/userContext";
+
 import "./forms.css";
 
 function Sign() {
@@ -11,7 +11,6 @@ function Sign() {
   const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { setLogged } = useContext(UserContext);
   const navigate = useNavigate();
   const { sign } = useUser();
 
@@ -27,7 +26,7 @@ function Sign() {
         if (err) {
           return setErrorMessage(err);
         }
-        setLogged(true);
+
         window.sessionStorage.setItem("session", JSON.stringify(data.data));
         navigate(`/?${searchParams.toString()}`);
       },
@@ -44,7 +43,7 @@ function Sign() {
         if (err) {
           return setErrorMessage(err);
         }
-        setLogged(true);
+
         window.sessionStorage.setItem("session", JSON.stringify(data.data));
         navigate("/");
       },

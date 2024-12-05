@@ -4,9 +4,8 @@ function ProtectedRoute() {
   const navigate = useNavigate();
   useEffect(() => {
     const user = JSON.parse(window.sessionStorage.getItem("session"));
-    console.log(user);
     if (!user?.token) {
-      navigate("/forms/sign/upload");
+      navigate("/forms/sign");
     }
   }, []);
 

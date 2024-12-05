@@ -8,7 +8,7 @@ export default function UpdatePass() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
-  const { updatePassword } = useUser();
+  const { resetPassword } = useUser();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -21,7 +21,7 @@ export default function UpdatePass() {
     }
     setLoader(true);
 
-    updatePassword(
+    resetPassword(
       (data, err) => {
         setLoader(false);
         if (err) {

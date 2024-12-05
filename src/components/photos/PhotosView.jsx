@@ -5,18 +5,15 @@ import Post from "./Post";
 import sortPhotosInColumns from "../../utils/sortPhotosColumn";
 import "./photosview.css";
 
-function PhotosView({ query, tag, user }) {
+function PhotosView({ query, tag, user, liked }) {
   const [columns, setColumns] = useState([[], [], []]);
   const [loader, setLoader] = useState(false);
   const cursor = useRef(null);
   const loadMore = useRef(false);
   const blockPhotos = useRef(null);
-
   const { get } = usePosts();
 
   const getPosts = () => {
-    // console.count("TRAE POSTS");
-    // console.log(cursor);
     get(
       (data, err) => {
         setLoader(false);
@@ -33,7 +30,7 @@ function PhotosView({ query, tag, user }) {
 
         cursor.current = data.cursor;
       },
-      { query, tag, user, cursor: cursor.current }
+      { query, tag, user, cursor: cursor.current, liked }
     );
   };
 
@@ -60,7 +57,7 @@ function PhotosView({ query, tag, user }) {
     return () => {
       blockPhotos.current?.removeEventListener("scroll", scrollHandler);
     };
-  }, [tag, query, user]);
+  }, [tag, query, user, liked]);
 
   const f = (p, i) => {
     return <Post key={i} post={p} />;

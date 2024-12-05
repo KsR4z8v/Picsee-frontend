@@ -41,7 +41,6 @@ function UploadPhotosModal({ visibleModel }) {
   };
 
   const p = (f) => {
-    console.log(f);
     return (
       <PostUploadPreview
         key={f.lastModified}

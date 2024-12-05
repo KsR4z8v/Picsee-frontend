@@ -1,6 +1,6 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import "./navbar.css";
-import UserContext from "../../context/userContext";
+
 import { IoIosSearch } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import Menu from "./Menu";
@@ -8,12 +8,23 @@ import Menu from "./Menu";
 function NavBar({ openUploadModal }) {
   const [search, setSearch] = useState("");
   const [visibleMenu, setVisibleMenu] = useState(false);
-  const { logged, avatar } = useContext(UserContext);
+  const [userDataInfo, setUserDataInfo] = useState();
 
   const navigate = useNavigate();
   useEffect(() => {
     setSearch("");
+    const sessionLocalStorage = window.sessionStorage.getItem("session");
+    if (!userDataInfo && sessionLocalStorage) {
+      const session = JSON.parse(sessionLocalStorage);
+      setUserDataInfo({
+        urlAvatar: session.urlAvatar,
+        username: session.username,
+      });
+    } else {
+      navigate("/");
+    }
   }, []);
+
   return (
     <>
       <header className="nav-bar">
@@ -64,7 +75,7 @@ function NavBar({ openUploadModal }) {
               </div>
             </li>
 
-            {!logged ? (
+            {!userDataInfo ? (
               <li className="menu__item-about item">
                 <NavLink
                   className="menu__btn-login nav-link"
@@ -82,7 +93,7 @@ function NavBar({ openUploadModal }) {
                       setVisibleMenu(!visibleMenu);
                     }}
                     className="nav-bar__avatar"
-                    src={avatar}
+                    src={userDataInfo?.urlAvatar}
                     alt=""
                   />
                 </div>
@@ -91,6 +102,7 @@ function NavBar({ openUploadModal }) {
           </ul>
           {visibleMenu ? (
             <Menu
+              username={userDataInfo.username}
               closeMenu={() => {
                 setVisibleMenu(false);
               }}

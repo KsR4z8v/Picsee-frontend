@@ -8,7 +8,7 @@ const RecoverPass = () => {
   const [error, setError] = useState(false);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  const { recoverPassword } = useUser();
+  const { recoverPasswordLink } = useUser();
 
   const handleRecovery = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const RecoverPass = () => {
       return setMessage("Debes de ingresar un correo electronico");
     }
     setLoader(true);
-    recoverPassword((data, error) => {
+    recoverPasswordLink((data, error) => {
       setLoader(false);
       if (error) {
         setError(true);

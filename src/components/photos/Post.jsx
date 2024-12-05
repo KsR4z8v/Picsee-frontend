@@ -3,10 +3,12 @@ import { useState } from "react";
 import OptionsPost from "./OptionsPost";
 import "./post.css";
 import capitalizeString from "../../utils/capitalizeString";
+import { useNavigate } from "react-router-dom";
 
 function Post({ post }) {
   const [dataPhoto, setDataPhoto] = useState("collapse");
   const [brightness, setBrightness] = useState(100);
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -22,7 +24,7 @@ function Post({ post }) {
         className="block-photos__container-post"
       >
         <img
-          src={post.image}
+          src={post.urlImage}
           className="block-photos__photo"
           alt=""
           loading="lazy"
@@ -35,7 +37,10 @@ function Post({ post }) {
             backdropFilter: `brightness(${brightness}%)`,
           }}
         >
-          <div className="block-photos__info-author">
+          <div
+            className="block-photos__info-author"
+            onClick={() => navigate(`/perfil/${post.author.username}`)}
+          >
             <img
               className="bloc-photos__avatar-author"
               src={post.author.urlAvatar}

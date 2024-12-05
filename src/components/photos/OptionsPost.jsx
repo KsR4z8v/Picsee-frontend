@@ -1,19 +1,21 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { IoMdArrowDown } from "react-icons/io";
 import download from "js-file-download";
 import usePosts from "../../hooks/usePosts";
-import UserContext from "../../context/userContext";
+
 // eslint-disable-next-line react/prop-types
 function OptionsPost({ post }) {
   const [liked, setLiked] = useState(post.liked);
-  const { logged } = useContext(UserContext);
+
   const { like } = usePosts();
   const likeHandler = () => {
-    if (!logged) {
-      return alert("Debes de iniciar sesion primero");
+    const localSession = window.sessionStorage.getItem("session");
+    const session = localSession ? JSON.parse(localSession) : undefined;
+    if (!session) {
+      return alert("Debes iniciar sesion primero.");
     }
     setLiked(!liked);
     like((data, err) => {

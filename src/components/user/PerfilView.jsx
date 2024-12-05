@@ -1,30 +1,55 @@
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../../context/userContext";
+import { useEffect, useRef, useState } from "react";
 import PhotosView from "../photos/PhotosView";
 import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import useUser from "../../hooks/useUser";
+import { SlSocialInstagram } from "react-icons/sl";
+import { SlSocialFacebook } from "react-icons/sl";
+import { SlSocialTwitter } from "react-icons/sl";
+import { SlSocialLinkedin } from "react-icons/sl";
 import "./perfilview.css";
+import { useNavigate } from "react-router-dom";
 
 export default function PerfilView() {
-  const { avatar, username } = useContext(UserContext);
   const { userQuery } = useParams();
-  const [fullnameView, setFullnameView] = useState();
-  const [usernameView, setUsernameView] = useState();
+  const userDataInfo = JSON.parse(
+    window.sessionStorage.getItem("session") ?? "{}"
+  );
+  const [fullnameView, setFullnameView] = useState("");
+  const [usernameView, setUsernameView] = useState("");
+  const [bio, setBio] = useState("");
+  const [socialLinks, setSocialLinks] = useState([]);
   const [avatarView, setAvatarView] = useState();
-  const [p, setP] = useState("icon-active");
-  const [l, setL] = useState("");
+  const { getUser } = useUser();
+  const [p, setP] = useState("active-option");
+  const [l, setL] = useState("deactivate-option");
+  const navigate = useNavigate();
+  const queryUser = useRef(userQuery);
+  const queryLked = useRef(false);
 
   useEffect(() => {
-    console.count();
-    if (username !== userQuery) {
-      //traigo informacion del usuario
-      console.log("TODO: Traer info del usuario -> ", userQuery);
-    } else {
-      setFullnameView(userQuery);
-      setUsernameView(userQuery);
-      setAvatarView(avatar);
-    }
+    const localSession = window.sessionStorage.getItem("session");
+    //const localUserInfo = window.sessionStorage.getItem("userInfo");
+
+    const session = localSession ? JSON.parse(localSession) : {};
+    //const userInfo = localSession ? JSON.parse(localUserInfo) : {};
+
+    getUser(userQuery, (res, error) => {
+      if (error) {
+        return alert(error.message);
+      }
+      const { data } = res;
+      setFullnameView(data.username);
+      setUsernameView(data.username);
+      setAvatarView(data.urlAvatar);
+      setBio(data.bio);
+      setSocialLinks(data.socialLinks);
+
+      if (session.username === userQuery) {
+        window.sessionStorage.setItem("userInfo", JSON.stringify(data));
+      }
+    });
   }, []);
 
   return (
@@ -35,47 +60,107 @@ export default function PerfilView() {
           <div className="block-perfil__top-data">
             <p className="block-perfil__fullname">{fullnameView}</p>
             <div className="block-perfil__options">
-              <div className="block-perfil__btn-edit-perfil btn-option ">
-                Editar perfil
-              </div>
-              <div className="block-perfil__btn-more btn-option btn-more">
-                ...
-              </div>
+              {userDataInfo?.username === usernameView ? (
+                <div
+                  className="block-perfil__btn-edit-perfil btn-option "
+                  onClick={() => navigate("/perfil/edit")}
+                >
+                  Editar perfil
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 
-          <p className="block-perfil__username">{`@${usernameView}`}</p>
+          <p className="block-perfil__username">
+            {usernameView ? `@${usernameView}` : ""}
+          </p>
+          <p>{bio}</p>
+          <div className="social-links">
+            {socialLinks.map((s, i) => {
+              if (s?.includes("instagram")) {
+                console.log(s);
+                return (
+                  <SlSocialInstagram
+                    key={i}
+                    onClick={() => {
+                      window.open(s);
+                    }}
+                    size={25}
+                    style={{ cursor: "pointer" }}
+                  />
+                );
+              }
+              if (s?.includes("facebook")) {
+                return (
+                  <SlSocialFacebook
+                    key={i}
+                    onClick={() => {
+                      window.open(s);
+                    }}
+                    size={25}
+                    style={{ cursor: "pointer" }}
+                  />
+                );
+              }
+              if (s?.includes("x.com")) {
+                return (
+                  <SlSocialTwitter
+                    key={i}
+                    onClick={() => {
+                      window.open(s);
+                    }}
+                    size={25}
+                    style={{ cursor: "pointer" }}
+                  />
+                );
+              }
+              if (s?.includes("linkedin")) {
+                return (
+                  <SlSocialLinkedin
+                    key={i}
+                    onClick={() => {
+                      window.open(s);
+                    }}
+                    size={25}
+                    style={{ cursor: "pointer" }}
+                  />
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
 
       <div className="block-perfil__options-feed">
-        <div className="block-perfil__container-icon-photo">
+        <div
+          className={`block-perfil__option ${p}`}
+          onClick={() => {
+            setP("active-option");
+            setL("deactivate-option");
+            queryLked.current = false;
+          }}
+        >
           <MdPhotoSizeSelectActual
-            onClick={() => {
-              setP("icon-active");
-              setL("");
-            }}
             size={25}
-            className={`block-perfil__icon-photo icon-option-feed ${p}`}
+            className={`block-perfil__icon-photo`}
           />
         </div>
-
         <div
           onClick={() => {
-            setL("icon-active");
-            setP("");
+            setL("active-option");
+            setP("deactivate-option");
+            queryLked.current = true;
           }}
-          className={`block-perfil__container-icon-heart `}
+          className={`block-perfil__option ${l}`}
         >
-          <FaHeart
-            className={`block-perfil__icon-heart icon-heart  icon-option-feed ${l}`}
-            size={25}
-          />
-          <p className="likes"> liked {103}</p>
+          <FaHeart className={`block-perfil__icon-heart`} size={25} />
+          <p className="likes"> liked</p>
         </div>
       </div>
       <div className="block-perfil__photos-feed">
-        <PhotosView user={userQuery} />
+        <PhotosView user={queryUser.current} liked={queryLked.current} />
       </div>
     </div>
   );

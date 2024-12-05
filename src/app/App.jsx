@@ -8,8 +8,9 @@ import UpdatePass from "../components/forms/UpdatePass";
 import MainView from "../components/mainview/MainView";
 import { UserContextProvider } from "../context/userContext";
 import PerfilView from "../components/user/PerfilView";
-import ProtectedRoute from "../utils/ProtectedRoute";
+//import ProtectedRoute from "../utils/ProtectedRoute";
 import "./app.css";
+import EditFormProfile from "../components/user/EditFormProfile";
 
 const router = createBrowserRouter([
   {
@@ -20,15 +21,15 @@ const router = createBrowserRouter([
         path: "/",
         element: <MainView />,
       },
+
       {
         path: "/perfil/:userQuery",
-        element: <ProtectedRoute />,
-        children: [
-          {
-            path: "",
-            element: <PerfilView />,
-          },
-        ],
+        element: <PerfilView />,
+      },
+
+      {
+        path: "/perfil/edit",
+        element: <EditFormProfile />,
       },
     ],
   },

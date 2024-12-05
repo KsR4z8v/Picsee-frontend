@@ -1,27 +1,33 @@
+/* eslint-disable no-unused-vars */
 import NavBar from "../components/navbar/NavBar";
 import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import UploadPhotos from "../components/photos/UploadPhotosModal";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../context/userContext";
+import { useEffect, useState } from "react";
 
 function Home() {
   const [visibleUploadModal, setVisibleUploadModal] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { logged } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const openUploadModal = () => {
-    if (!logged) {
+    const localSession = window.sessionStorage.getItem("session");
+    const session = localSession ? JSON.parse(localSession) : undefined;
+    if (!session) {
       navigate("/forms/sign?o=u");
     } else {
       setVisibleUploadModal(true);
     }
   };
   useEffect(() => {
+    console.log("pasa por aqui");
     const session = window.sessionStorage.getItem("session");
-    if (session && searchParams.get("o") === "u") {
-      searchParams.delete("o");
-      setVisibleUploadModal(true);
+    if (searchParams.get("o") === "u") {
+      if (!session) {
+        alert("Debes iniciar sesion primero.");
+      } else {
+        setVisibleUploadModal(true);
+      }
     }
   }, []);
   return (

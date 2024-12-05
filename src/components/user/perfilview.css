@@ -69,37 +69,20 @@
 
 
 
-
-.icon-option-feed {
-    color: rgb(199, 199, 199);
-    cursor: pointer;
-    width: 90px;
-    padding-bottom: 10px;
-}
-
-.block-perfil__container-icon-photo {
+.block-perfil__option {
     display: flex;
     cursor: pointer;
+    height: 35px;
+    width: 100px;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 10px;
     justify-content: center;
-    align-items: center;
-    width: 90px;
-    height: 35px;
 }
 
-.block-perfil__container-icon-heart {
-    display: flex;
-    cursor: pointer;
-    height: 35px;
-    gap: 14px;
-    align-items: center;
-    position: relative;
-}
-
-.icon-heart {
-    width: 30px;
-    padding-left: 0;
-    padding-bottom: 9px;
-    padding-right: 110px;
+.block-perfil__container-icon-heart p {
+    margin: 0;
+    text-wrap: nowrap;
 }
 
 
@@ -107,16 +90,19 @@
     color: rgb(0, 0, 0);
 }
 
-.block-perfil__container-icon-heart p {
-    margin: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: rgb(143, 143, 143);
+
+.active-option {
+    color: rgb(0, 0, 0);
+    border-bottom: 3px solid black;
+    transition: all 10ms;
 }
 
-.icon-active {
-    color: rgb(75, 75, 75);
-    border-bottom: 3px solid black;
-    transition: all .1s;
+.deactivate-option {
+    color: rgb(199, 199, 199);
+}
+
+.social-links {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
 }
